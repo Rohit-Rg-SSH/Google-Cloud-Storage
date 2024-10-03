@@ -1,0 +1,7 @@
+Methods	Urls	Actions
+POST	/upload	upload a File
+GET	/files	get List of Files (name & url)
+GET	/files/[filename]	download a File
+– Upload a File:
+
+TEST
