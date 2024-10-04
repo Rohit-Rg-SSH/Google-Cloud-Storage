@@ -5,29 +5,11 @@ const { Storage } = require("@google-cloud/storage");
 const storage = new Storage({ keyFilename: "google-cloud-key.json" });
 
 // please give your bucket a specific name
-const bucket = storage.bucket("ssh-test-bucket123");
+const bucket = storage.bucket("ssh-dashboard");
 
 const upload = async (req, res) => {
   try {
     await processFile(req, res);
-
-    if (!req.file) {
-      return res.status(400).send({ message: "Please upload a file!" });
-    }
-
-    const blob = bucket.file(req.file.originalname);
-    const blobStream = blob.createWriteStream({
-      resumable: false,
-    });
-
-    blobStream.on("error", (err) => {
-      res.status(500).send({ message: err.message });
-    });
-
-    blobStream.on("finish", async (data) => {
-      const publicUrl = format(
-        `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-      );
 
       try {
         await bucket.file(req.file.originalname).makePublic();
